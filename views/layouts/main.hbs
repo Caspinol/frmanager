@@ -1,0 +1,31 @@
+<!DOCTYPE html> 
+<html>  
+  <head>        
+    <title>{{title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel='stylesheet' charset="utf-8" href='/stylesheets/fonts.css'/>
+    <link rel='stylesheet' charset="utf-8" href='/stylesheets/style.css'/>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+  </head>
+  <body>
+    <div class="body-wrap">
+      <div class="header">
+        {{> navbar }}
+      </div>
+
+      <div class="content">
+        {{{ body }}}
+      </div>
+      
+      {{{ footer }}}
+    </div>
+  </body>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="/javascripts/sticky_navbar.js"></script>
+  <script type="text/javascript" src="/javascripts/shell.js"></script>
+
+  <script>
+    $(function () { shell.initModule(); });
+  </script>
+</html>
