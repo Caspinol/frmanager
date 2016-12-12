@@ -1,0 +1,32 @@
+<div class="content-left">
+  <div class="content-left-menu">
+    <ul>
+      <li><a id="list-users" class="btn" href="/U">List users</a></li>
+      <li><a id="new-user" class="btn" href="#">New user</a></li>
+      <li><a id="edit-user" class="btn" href="#">Edit user</a></li>
+      <li><a id="delete-user" class="btn" href="#">Delete user</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="content-right">
+  <p>Super important user info</p>
+</div>
+
+<div class="modal modal-add">
+  <div class="modal-add-body">
+    <fieldset>
+      <legend> Add new subscriber </legend>
+      <form class="modal-add-body-form" action="/U/add" method="post">
+        {{#each columns}}
+        <input type="text" class="modal-add-{{Field}}"
+               name="{{Field}}" placeholder="{{Field}}"/>
+        {{/each}}
+        <input type="submit" class="modal-add-submit btn"
+               id="modal-add-submit" value="Create"/>
+        <input type="button" class="modal-add-cancel btn"
+               id="modal-add-cancel" value="Cancel"/>
+      </form>
+    </fieldset>
+  </div>
+</div>
