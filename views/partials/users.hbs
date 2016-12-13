@@ -3,14 +3,16 @@
     <ul>
       <li><a id="list-users" class="btn" href="/U">List users</a></li>
       <li><a id="new-user" class="btn" href="#">New user</a></li>
-      <li><a id="edit-user" class="btn" href="#">Edit user</a></li>
       <li><a id="delete-user" class="btn" href="#">Delete user</a></li>
     </ul>
   </div>
 </div>
 
 <div class="content-right">
-  <p>Super important user info</p>
+  <div class="content-right-body">
+    <div class="content-right-body-list">
+      {{#paginate users}}{{/paginate}}
+  </div>
 </div>
 
 <div class="modal modal-add">
@@ -23,9 +25,9 @@
                name="{{Field}}" placeholder="{{Field}}"/>
         {{/each}}
         <input type="submit" class="modal-add-submit btn"
-               id="modal-add-submit" value="Create"/>
+               value="Update"/>
         <input type="button" class="modal-add-cancel btn"
-               id="modal-add-cancel" value="Cancel"/>
+               value="Cancel"/>
       </form>
     </fieldset>
   </div>

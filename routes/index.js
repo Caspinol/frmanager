@@ -1,18 +1,63 @@
+var pagination = require('../lib/pagination')
+
 module.exports = function(app, passport){
 
+    var db = app.locals.db
+    var handlebars = app.locals.hbs.handlebars
+    
     /* GET home page. */
     app.get('/', isLoggedIn, function(req, res, next){
         res.render('partials/dashboard', {title: "test"}) 
     })
-    app.get('/U', isLoggedIn, function(req, res, next){
-        app.locals.db.users.showColumns(function(err, columns){
-            console.log(columns[0].Field)
-            res.render('partials/users', {columns: columns})
+    
+    app.get('/U/:page?', function(req, res, next){
+        var page = req.params.page || 0
+        db.users.showColumns(function(err, columns){
+            if(err) console.log(err)
+            db.users.showUsers(page, function(err, users){
+                if(err) console.log(err)
+                db.users.countUsers(function(err, count){
+                    if(err) console.log(err)
+                    var count = count[0].count
+                    res.render('partials/users', {
+                        columns: columns.slice(1),
+                        users: users,
+                        helpers: {
+                            paginate: function(users, options){
+                                var html = ''
+                                var current_page = handlebars.Utils.escapeExpression(page)
+                                html += '<div class="">'
+                                html += db.users.toHTML(users, columns)
+                                html += '</div>'
+                                html += '<div class="pagination">'
+                                html += pagination(current_page, Math.ceil(count/10))
+                                return new handlebars.SafeString(html + '</div>')
+                            }
+                        }
+                    })
+                })
+            })
+        })
+    })
+
+    app.get('/U/edit/:id', function(req, res, next){
+        db.users.findById(req.params.id, function(err, user){
+            res.send(user)
+        })
+    })
+
+    app.post('/U/edit', function(req, res, next){
+        db.users.updateUser(req.body, function(err, user){
+            if(err){
+                console.log(err)
+                return next(err)
+            }
+            res.redirect('/U')
         })
     })
     
     app.post('/U/add', isLoggedIn, function(req, res, next){
-        app.locals.db.users.addUser(req.body, function(err, ret){
+        db.users.addUser(req.body, function(err, ret){
             if(err){
                 console.log(err)
                 return next(err)
